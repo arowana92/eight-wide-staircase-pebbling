@@ -123,12 +123,7 @@ python3 -B research/upper.py
 
 To regenerate the saved potential, run `python3 -B research/proof.py --part dual --regenerate`. To print the explicit construction at a chosen length, run e.g. `python3 -B research/upper.py --length 100`.
 
-An additional Lean 4 check proves that the auxiliary stock can pay for every crossing move at every prefix of a sequence. It also checks the transition bound for unbounded cut coordinates, telescoping, endpoints, the fifteen-copy arithmetic and the induction for the upper construction. Its hypotheses include the finite edge inequalities and the geometric extension step. The window computation and the physical embeddings are established above. The file uses only the Lean standard library and was checked with Lean 4.36.0. [Formalized lemmas](ProofKernel.lean)
-
-```sh
-lake build
-lake env lean research/ProofKernel.lean
-```
+Lean 4 formalizes the entire proof from legal moves, including the physical window exclusions and the numerical transfer certificate. The formal development derives the two-sided integer bounds and the original real-valued Big-O statement. Its transfer checker uses a second certificate with separate positions for each rule prefix. The verification guide gives the clean build, axiom audit and fresh kernel replay commands. [Lean verification guide](lean-status.md) · [Pointwise theorem](../Staircase/Resolution.lean) · [Asymptotic theorem](../Staircase/Asymptotics.lean)
 
 The additive constant three relative to the ceiling is attained at length two. Running the whole-graph checker at length two and budget five excludes all 54 placements surviving its weight test, and the construction above supplies six pebbles. This concerns the uniform bound over all positive lengths.
 

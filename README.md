@@ -1,22 +1,30 @@
 # Eight-wide staircase pebbling
 
-**Conjecture 3.2 is proved by a computer-assisted argument.** For every positive integer $n$,
+**Resolved · ✅ Complete Lean 4 proof of Conjecture 3.2.** For every positive integer $n$,
+
 $$
 \left\lceil\frac{5n}{4}\right\rceil
 \le \pi_{\mathrm{opt}}(S_{8,n})
 \le \left\lceil\frac{5n}{4}\right\rceil+3 .
 $$
-The bounds apply to the original staircase graph. Each target may use a different sequence of moves from the same initial distribution. [Proof and reproduction instructions](research/proof.md) · [Original conjecture](https://arxiv.org/abs/1611.09686)
+
+The bounds apply to the original staircase graph. Each target may use a different sequence of moves from the same initial distribution. [Lean verification and reproduction](research/lean-status.md) · [Mathematical proof](research/proof.md) · [Original conjecture](https://arxiv.org/abs/1611.09686)
 
 The lower bound describes how many pebbles the rest of the strip can supply to a short window. An integer potential then bounds the total mass along any solvable strip, with a fixed loss at the ends. Fifteen disjoint copies of any putative counterexample would exceed that loss. For the upper bound an explicit construction adds four slashes for five pebbles. [Window obstructions](certificates/five-fourths-windows.txt) · [Potential certificate](certificates/five-fourths-dual.txt) · [Upper construction](research/upper.py)
 
-Two independently implemented checkers verified all 231 window obstructions, covering 969,273 placements. One checks the saved potential on 1,727,870 edges. The other derives its own potential from the window list using a different representation of the states. Lean checks the integer estimates extending the calculation to arbitrarily large stocks and lengths. These checks were performed in this project. The result has not undergone external peer review. [Python checker](research/proof.py) · [C++ checker](research/audit.cpp) · [Lean lemmas](research/ProofKernel.lean)
-
-**Lean formalization in progress.** Lean proves the upper bound for the original graph at every positive length. The formal lower bound is in development. [Lean endpoints and audit](research/lean-status.md)
+Lean proves both bounds from legal moves, verifies all 231 local exclusions and checks a 6,516-row transfer certificate. The final theorem states the bounded additive error in mathlib’s Big-O notation. Two independently implemented Python and C++ checkers also verify the computer-assisted argument. The result has not undergone external peer review. [Lean theorem](Staircase/Asymptotics.lean) · [Verification receipt](research/lean-receipt.json) · [Python checker](research/proof.py) · [C++ checker](research/audit.cpp)
 
 ## Reproduce the result
 
-From the root of the checkout, run the standalone C++17 lower-bound verifier and the Python upper-bound verifier.
+With the pinned Lean 4.36.0 toolchain, run the following from the repository root. The verification guide includes the dependency-cache command, certificate regeneration and module-by-module replay. [Lean verification guide](research/lean-status.md)
+
+```sh
+lake build
+lake env lean research/CheckLean.lean
+LEAN_NUM_THREADS=1 lake env leanchecker --fresh --verbose Staircase
+```
+
+To reproduce the independent C++17 lower-bound and Python upper-bound checks, run
 
 ```sh
 c++ -O3 -std=c++17 research/audit.cpp -o /tmp/staircase-audit
@@ -24,7 +32,7 @@ c++ -O3 -std=c++17 research/audit.cpp -o /tmp/staircase-audit
 python3 -B research/upper.py
 ```
 
-For the separate forward-move lower-bound verification, run `python3 -B research/proof.py`. The proof gives the regeneration and optional Lean commands.
+The separate forward-move lower-bound verification runs with `python3 -B research/proof.py`. [Certificate construction and verification](research/proof.md)
 
 ## Research milestones
 
