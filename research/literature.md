@@ -1,0 +1,9 @@
+# Literature record
+
+Checked 26 November 2026.
+
+Győri, Katona, Papp and Tompkins define staircases using positive and negative diagonals of the square grid. Theorem 2.14 bounds the seven-wide optimum. Figure 10 gives its repeating construction, with piles of four. Claim 3.1 extends it by one diagonal. Section 3 reports the optimum 11 for the eight-by-eight staircase and gives the width-eight conjecture. Figure 12 illustrates the extension and uses more pebbles than the optimum. The paper appeared in *Discrete Mathematics* in 2019. [Preprint](https://arxiv.org/abs/1611.09686) · [Journal article](https://doi.org/10.1016/j.disc.2018.06.042)
+
+László F. Papp's 2022 doctoral dissertation, *Optimal pebbling number of graphs*, revisits the problem in §4.7 on page 44. It attributes the value 11 to the integer program on page 47. Claim 4.19 and Conjecture 4.20 give the extension and the conjecture. [Full dissertation at Budapest University of Technology and Economics](https://repozitorium.omikk.bme.hu/server/api/core/bitstreams/d6963aa7-c47b-4b5d-a589-af7b8543b761/content)
+
+A forward-citation search of the journal paper in OpenAlex and title/keyword searches for staircase optimal pebbling, eight-wide strips, and subsequent grid bounds located no resolution of Conjecture 3.2. The square-grid papers below treat rectangular grids or tori. The 2024 restricted-pebbling paper studies the effect of imposing a limit on each pile. None of those statements supplies the missing width-eight lower bound. The search makes no priority claim for the finite computations here. [Forward citations](https://api.openalex.org/works?filter=cites:W2557860906) · [Square-grid lower bound](https://doi.org/10.1007/s00373-020-02154-z) · [Improved grid lower bound](https://arxiv.org/abs/2111.13173) · [Restricted pebbling](https://doi.org/10.1016/j.dam.2024.06.013)
