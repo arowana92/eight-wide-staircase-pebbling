@@ -8,12 +8,15 @@ c++ -O3 -std=c++17 research/finite.cpp -o /tmp/staircase-finite
 python3 research/witness.py certificates/s8-8.json
 /tmp/staircase-finite 9 12
 python3 research/witness.py certificates/s8-9.json
+/tmp/staircase-finite 10 13
+python3 research/witness.py certificates/s8-10.json
 ```
 
 | Length | Infeasible budget | Complete placements passing the weight test | Certified optimum |
 | ---: | ---: | ---: | ---: |
 | 8 | 10 | 19,751 | 11 |
 | 9 | 12 | 18,182,744 | 13 |
+| 10 | 13 | 100,978,220 | 14 |
 
 The lower search enumerates multisets of exactly the indicated budget on the whole graph, adding pebbles in nondecreasing vertex order. This covers smaller placements by padding. For every target $t$, give $v$ weight $2^{-d(v,t)}$. No move increases total weight. During enumeration the current weight plus the remaining budget times the greatest available vertex weight must reach one for every target. This upper estimate permits pruning entire subtrees. All weights are scaled by two to the power of the diameter, so all comparisons are exact.
 
