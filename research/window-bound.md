@@ -4,7 +4,7 @@
 $$
 |P|\ \ge\ \left\lceil\frac{9n}{8}\right\rceil .
 $$
-All piles and lengths are unrestricted. The proof checks finitely many local obstructions, converts them into a lower bound with an additive constant, and removes the constant by concatenation. The conjectured coefficient is $5/4$.
+All piles and lengths are unrestricted. The proof checks finitely many local obstructions, converts them into a lower bound with an additive constant, and removes the constant by concatenation. The final certificate reaches the coefficient $5/4$. [Full proof](proof.md)
 
 ```sh
 python3 research/window_bound.py

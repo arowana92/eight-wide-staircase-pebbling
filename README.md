@@ -1,21 +1,33 @@
 # Eight-wide staircase pebbling
 
-**Work in progress.**
+**Conjecture 3.2 is proved by a computer-assisted argument.** For every positive integer $n$,
+$$
+\left\lceil\frac{5n}{4}\right\rceil
+\le \pi_{\mathrm{opt}}(S_{8,n})
+\le \left\lceil\frac{5n}{4}\right\rceil+3 .
+$$
+The bounds apply to the original staircase graph. Each target may use a different sequence of moves from the same initial distribution. [Proof and reproduction instructions](research/proof.md) · [Original conjecture](https://arxiv.org/abs/1611.09686)
 
-Conjecture 3.2 of Győri, Katona, Papp and Tompkins predicts that the optimal pebbling number of the width-eight staircase graph of length *n* differs from 5*n*/4 by at most a constant independent of *n*.
+The lower bound describes how many pebbles the rest of the strip can supply to a short window. An integer potential then bounds the total mass along any solvable strip, with a fixed loss at the ends. Fifteen disjoint copies of any putative counterexample would exceed that loss. For the upper bound an explicit construction adds four slashes for five pebbles. [Window obstructions](certificates/five-fourths-windows.txt) · [Potential certificate](certificates/five-fourths-dual.txt) · [Upper construction](research/upper.py)
 
-A pebbling move removes two pebbles from one vertex and puts one on an adjacent vertex. An initial placement is solvable if each vertex can receive a pebble, starting afresh from that placement for each target. The optimal pebbling number is the smallest number of pebbles in a solvable placement.
+Two independently implemented checkers verified all 231 window obstructions, covering 969,273 placements. One checks the saved potential on 1,727,870 edges. The other derives its own potential from the window list using a different representation of the states. Lean checks the integer estimates extending the calculation to arbitrarily large stocks and lengths. These checks were performed in this project. The result has not undergone external peer review. [Python checker](research/proof.py) · [C++ checker](research/audit.cpp) · [Lean lemmas](research/ProofKernel.lean)
 
-The goal is to prove the uniform additive bound or exhibit unbounded deviations. Individual graph sizes provide test cases for constructions and lower bounds.
+## Reproduce the result
 
-[Original conjecture and graph definitions, *The Optimal Pebbling Number of Staircase Graphs* (2016 preprint)](https://arxiv.org/abs/1611.09686)
+From the root of the checkout, run the standalone C++17 lower-bound verifier and the Python upper-bound verifier.
+
+```sh
+c++ -O3 -std=c++17 research/audit.cpp -o /tmp/staircase-audit
+/tmp/staircase-audit certificates/five-fourths-windows.txt
+python3 -B research/upper.py
+```
+
+For the separate forward-move lower-bound verification, run `python3 -B research/proof.py`. The proof gives the regeneration and optional Lean commands.
 
 ## Research milestones
 
-- Every solvable placement on $S_{8,n}$ has at least $\lceil 9n/8\rceil$ pebbles. The published upper bound is $5n/4+O(1)$. [All-length lower bound and certificate](research/window-bound.md) · [Earlier $21n/20$ certificate](research/projection.md)
-
-- An exhaustive integer search reproduces $\pi_{\rm opt}(S_{8,8})=11$ and gives the optima 13 and 14 for lengths nine and ten. Each upper certificate contains one legal move sequence per target. [Reproduction commands and search proof](research/finite.md)
-- Concatenation makes the conjectured lower bound equivalent to $4\pi_{\rm opt}(S_{8,n})\ge5n$ for every finite length. A cut argument bounds the additive error relative to the unknown limiting slope by 40. Its value is still undetermined. [Uniform bounds](research/bounds.md)
-- The original paper and Papp's dissertation give the width-eight upper construction. [Literature record](research/literature.md)
-- A local replacement argument bounds every optimal slash by 254 pebbles. It reduces the unknown slope to the minimum cycle mean of an explicit finite graph. The graph has not been evaluated. [Finite-state reduction](research/finite-state.md)
-- Exhaustive checks exclude an unassisted periodic counterexample of period at most eight, including odd periods with row reflection. [Periodic obstructions and replay](research/periodic.md)
+- The exact optimal masses at lengths 8, 9 and 10 are 11, 13 and 14. The first reproduces the value reported by the original authors. Each upper witness gives a legal sequence per target. [Finite-case results and replay](research/finite.md)
+- Earlier window certificates gave the all-length lower bounds $21n/20$ and $9n/8$. [First certificate](research/projection.md) · [Nine-eighths certificate](research/window-bound.md)
+- Concatenation and cut estimates bound the additive error around the limiting slope. A separate finite-state argument establishes that the slope is rational. [Uniform bounds](research/bounds.md) · [Finite-state reduction](research/finite-state.md)
+- Small-period searches ruled out unassisted periodic counterexamples through period eight. [Periodic checks](research/periodic.md)
+- The literature search covers the original paper, Papp's dissertation and later citing work. [Literature record](research/literature.md)

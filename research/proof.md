@@ -39,6 +39,8 @@ $$
 $$
 This applies wherever the window occurs. Reflection handles either starting parity.
 
+The rules were found by looking for cycles of mean mass below $5/4$ in a relaxed transfer graph, then testing short windows from those cycles. For the proof, the list only needs to satisfy the two finite assertions below. Every listed window is impossible, and the surviving transitions admit the stated potential.
+
 | Window length | Rules | Placements checked |
 | ---: | ---: | ---: |
 | 3 | 36 | 1,909 |
@@ -48,7 +50,7 @@ This applies wherever the window occurs. Reflection handles either starting pari
 | 7 | 7 | 339,550 |
 | **Total** | **231** | **969,273** |
 
-The number of placements for a line is $\prod_j\binom{u_j+3}{3}$. The Python verifier enumerates those placements and computes reachable targets by induction on total mass. For stock $P$, take the union of its occupied physical vertices and the target sets of all legal one-move successors. Every successor has one fewer pebble. Taking this union permits different move sequences for different targets. [Forward reachability and enumeration](projection.py) · [Certificate replay](proof.py)
+The number of placements for a line is $\prod_j\binom{u_j+3}{3}$. The largest of these finite tests uses sixteen pebbles including both auxiliary stocks. The Python verifier enumerates those placements and computes reachable targets by induction on total mass. For stock $P$, take the union of its occupied physical vertices and the target sets of all legal one-move successors. Every successor has one fewer pebble. Taking this union permits different move sequences for different targets. [Forward reachability and enumeration](projection.py) · [Certificate replay](proof.py)
 
 The C++ verifier constructs the graph directly in $(x,y)$ coordinates. For each submultiset $Q$ of the starting tokens it computes the vertices where those tokens can be the exact ancestors of one pebble. A singleton can end at its own site. For a larger $Q$, split it in every way into two nonempty disjoint multisets. Intersect their possible endpoint sets, take all neighbors, and take the union over splits. The two derivations can be executed consecutively because they use disjoint tokens. Conversely the last move in an ancestry tree gives such a split. The union over all submultisets is exactly the set of reachable sites. The verifier first discards placements where an empty target has distance weight below one, or every neighbor has weight below two. These are valid necessary tests since $\sum_v P(v)2^{-d(v,t)}$ never increases and a final move into an empty target needs two pebbles at a neighbor. All comparisons use integers. [Independent ancestry verifier](audit.cpp)
 
@@ -87,7 +89,7 @@ $$
 
 ## A construction with at most three extra pebbles
 
-The authors already obtain the asymptotic upper bound by adding a diagonal to their seven-wide construction. In the present coordinates, start with at most $n+3$ pebbles on rows 1 through 7 by Theorem 2.14, for $n\ge8$. Pair the row-8 vertices in slash order. Put one extra pebble on the common row-7 neighbor of each pair and on a row-7 neighbor of any singleton. The number added is $\lceil\lfloor n/2\rfloor/2\rceil\le\lceil n/4\rceil$. The old placement can bring one pebble to any marked site, making two available there for a move to the selected row-8 target. This gives the asserted upper bound in the range of the conjecture. [Theorem 2.14, Figure 10 and Claim 3.1](https://arxiv.org/pdf/1611.09686)
+The authors already obtain the asymptotic upper bound by adding a diagonal to their seven-wide construction. In the present coordinates, rows 1 through 7 induce the authors’ primed width-seven strip. For $n\ge8$ Theorem 2.14 gives it a solvable distribution with at most $n+3$ pebbles. Pair the row-8 vertices in slash order. Put one extra pebble on the common row-7 neighbor of each pair and on a row-7 neighbor of any singleton. The number added is $\lceil\lfloor n/2\rfloor/2\rceil\le\lceil n/4\rceil$. The old placement can bring one pebble to any marked site, making two available there for a move to the selected row-8 target. This gives the asserted upper bound in the range of the conjecture. [Theorem 2.14, Figure 10 and Claim 3.1](https://arxiv.org/pdf/1611.09686)
 
 Here is a second construction covering **every** $n\ge1$. In the table an entry $(s,r)^p$ denotes $p$ pebbles at $(s,r)$, with exponent one omitted. The verifier finds and replays a path to each target from these stocks. [Construction and base checks](upper.py) · [Move-sequence checker](witness.py)
 
@@ -121,10 +123,12 @@ python3 -B research/upper.py
 
 To regenerate the saved potential, run `python3 -B research/proof.py --part dual --regenerate`. To print the explicit construction at a chosen length, run e.g. `python3 -B research/upper.py --length 100`.
 
-An additional Lean 4 check covers the exterior-supply inequalities, the transition bound with unbounded cut coordinates, telescoping, endpoints, and the fifteen-copy arithmetic. It takes the finite edge inequalities as hypotheses. The window computation and the physical embedding of copies are established above. The file uses only the Lean standard library and was checked with Lean 4.36.0. [Formalized lemmas](ProofKernel.lean)
+An additional Lean 4 check proves that the auxiliary stock can pay for every crossing move at every prefix of a sequence. It also checks the transition bound for unbounded cut coordinates, telescoping, endpoints, the fifteen-copy arithmetic and the induction for the upper construction. Its hypotheses include the finite edge inequalities and the geometric extension step. The window computation and the physical embeddings are established above. The file uses only the Lean standard library and was checked with Lean 4.36.0. [Formalized lemmas](ProofKernel.lean)
 
 ```sh
 lean research/ProofKernel.lean
 ```
+
+The additive constant three relative to the ceiling is attained at length two. Running the whole-graph checker at length two and budget five excludes all 54 placements surviving its weight test, and the construction above supplies six pebbles. This concerns the uniform bound over all positive lengths.
 
 The exact $8\times8$ test uses a separate whole-graph search. Budget ten leaves 19,751 complete placements after integer weight pruning, and each fails at least one target. At budget eleven a saved placement admits legal paths to all 32 targets. The repository also contains the exhaustive checks at lengths nine and ten. [Finite-case proofs, witnesses and commands](finite.md)

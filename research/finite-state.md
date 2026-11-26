@@ -1,6 +1,6 @@
-# A finite-state reduction for the unknown slope
+# A finite-state reduction for the limiting slope
 
-Write $a_n=\pi_{\rm opt}(S_{8,n})$ and $\lambda=\inf_n a_n/n$. The preceding cut estimate gives $a_h\le5h/4+40$ at every positive length. The following argument bounds the alphabet and interface flows needed to compute $\lambda$ by a finite minimum-cycle-mean problem. The cycle mean has yet to be evaluated. [Cut estimate](bounds.md)
+Write $a_n=\pi_{\rm opt}(S_{8,n})$ and $\lambda=\inf_n a_n/n$. The preceding cut estimate gives $a_h\le5h/4+40$ at every positive length. The following argument bounds the alphabet and interface flows needed to compute $\lambda$ by a finite minimum-cycle-mean problem. The full proof determines $\lambda=5/4$ using a smaller graph of necessary conditions. [Cut estimate](bounds.md) · [Full proof](proof.md)
 
 ## A uniform bound on the mass of an optimal slash
 
@@ -47,4 +47,4 @@ The boundary conditions and recurrences determine the prefix and suffix sets on 
 
 Discard states unreachable from a start or unable to reach a finish. Every long accepting walk decomposes into cycles and a remaining simple path of bounded length. Its asymptotic mean cost is at least the minimum cycle mean in the retained graph. A minimizing cycle can be reached, repeated, and followed by a path to a finish. Along these lengths the upper limit of the cost per slash is at most that cycle mean. The full limit exists by subadditivity. Hence $\lambda$ equals this **rational, computable minimum cycle mean**.
 
-Equivalently, assign each edge cost $4\sum p_i-5$. Conjecture 3.2 holds precisely when the retained graph has no negative cycle. A cycle exclusion or a negative cycle with accepting access and exit walks would settle the question. The size of the power sets in this construction makes direct enumeration impractical. Repetition here concerns accepting walks with their boundary conditions. A repeated interior pattern can in principle depend on pebbles supplied from its ends.
+Equivalently, assign each edge cost $4\sum p_i-5$. Conjecture 3.2 holds precisely when the retained graph has no negative cycle. The window certificate proves the lower bound by ruling out negative cycles in its smaller relaxation. The size of the power sets in this construction makes direct enumeration impractical. Repetition here concerns accepting walks with their boundary conditions. A repeated interior pattern can in principle depend on pebbles supplied from its ends.
