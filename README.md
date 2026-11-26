@@ -12,6 +12,8 @@ The lower bound describes how many pebbles the rest of the strip can supply to a
 
 Two independently implemented checkers verified all 231 window obstructions, covering 969,273 placements. One checks the saved potential on 1,727,870 edges. The other derives its own potential from the window list using a different representation of the states. Lean checks the integer estimates extending the calculation to arbitrarily large stocks and lengths. These checks were performed in this project. The result has not undergone external peer review. [Python checker](research/proof.py) · [C++ checker](research/audit.cpp) · [Lean lemmas](research/ProofKernel.lean)
 
+**Lean formalization in progress.** Lean proves the upper bound for the original graph at every positive length. The formal lower bound is in development. [Lean endpoints and audit](research/lean-status.md)
+
 ## Reproduce the result
 
 From the root of the checkout, run the standalone C++17 lower-bound verifier and the Python upper-bound verifier.
