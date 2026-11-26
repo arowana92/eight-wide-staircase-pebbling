@@ -54,7 +54,7 @@ def generate(length, placement):
                     queue.append(key)
     if len(paths) != len(board):
         raise ValueError("placement cannot reach every vertex")
-    return dict(length=length, vertices=board, initial=initial,
+    return dict(length=length, vertices=[list(v) for v in board], initial=list(initial),
                 paths=[paths[i] for i in range(len(board))])
 
 
