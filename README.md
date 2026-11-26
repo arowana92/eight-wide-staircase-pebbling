@@ -16,3 +16,4 @@ The goal is to prove the uniform additive bound or exhibit unbounded deviations.
 - Concatenation makes the conjectured lower bound equivalent to $4\pi_{\rm opt}(S_{8,n})\ge5n$ for every finite length. A cut argument bounds the additive error relative to the unknown limiting slope by 40. Its value is still undetermined. [Uniform bounds](research/bounds.md)
 - The original paper and Papp's dissertation give the width-eight upper construction. [Literature record](research/literature.md)
 - A local replacement argument bounds every optimal slash by 254 pebbles. It reduces the unknown slope to the minimum cycle mean of an explicit finite graph. The graph has not been evaluated. [Finite-state reduction](research/finite-state.md)
+- Exhaustive checks exclude an unassisted periodic counterexample of period at most eight, including odd periods with row reflection. [Periodic obstructions and replay](research/periodic.md)
