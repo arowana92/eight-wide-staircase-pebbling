@@ -12,6 +12,8 @@ The goal is to prove the uniform additive bound or exhibit unbounded deviations.
 
 ## Research milestones
 
+- Every solvable placement on $S_{8,n}$ has at least $21n/20$ pebbles. The upper bound is $5n/4+O(1)$. [All-length lower bound and certificate](research/projection.md)
+
 - An exhaustive integer search reproduces $\pi_{\rm opt}(S_{8,8})=11$ and gives $\pi_{\rm opt}(S_{8,9})=13$. Each upper certificate contains one legal move sequence per target. [Reproduction commands and search proof](research/finite.md)
 - Concatenation makes the conjectured lower bound equivalent to $4\pi_{\rm opt}(S_{8,n})\ge5n$ for every finite length. A cut argument bounds the additive error relative to the unknown limiting slope by 40. Its value is still undetermined. [Uniform bounds](research/bounds.md)
 - The original paper and Papp's dissertation give the width-eight upper construction. [Literature record](research/literature.md)
