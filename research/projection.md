@@ -6,8 +6,11 @@ The finite certificate and all exhaustive checks use Python 3's standard library
 
 ```sh
 python3 research/projection.py
+python3 research/audit_projection.py
 python3 research/projection.py --regenerate
 ```
+
+The independent audit builds edges from the original square-grid coordinates. It enumerates the 56,810 transitions from pairs of interfaces and checks 82,556 finite placements by a second reachability algorithm. That algorithm splits the initial tokens into two disjoint groups. If each group can produce a pebble at the same vertex, the groups together can reach any neighbor. Recursing through all splits is complete by tracing the two parents of the last pebbling move. The audit shares the numerical potential file with the first checker and imports none of its implementation.
 
 ## How much help can come from outside a window?
 
