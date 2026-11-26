@@ -17,8 +17,20 @@ run_cmd do
   if checked == 0 then throwError "no Staircase declarations found"
   logInfo m!"Audited {checked} project declarations."
 
-example : ∀ n : Nat, 0 < n → Staircase.optimal n ≤ (5*n+3)/4+3 :=
-  fun _ h => Staircase.optimal_upper h
+open Staircase Filter Asymptotics
 
-#print axioms Staircase.optimal_upper
+example : ∀ n : Nat, 0 < n →
+    (5*n+3)/4 ≤ optimal n ∧ optimal n ≤ (5*n+3)/4+3 := optimal_bounds
+
+example : ∀ {n : Nat}, 0 < n → ∀ {P : Stock}, Solvable n P → (5*n+3)/4 ≤ P.card :=
+  @solvable_lower
+
+example : (fun n : Nat => (optimal n : ℝ)-5*(n:ℝ)/4) =O[atTop] (fun _ : Nat => (1:ℝ)) :=
+  conjecture32
+
+#print axioms Staircase.conjecture32
+#print axioms Staircase.optimal_bounds
+#print axioms Staircase.solvable_lower
+#print axioms Staircase.windowRules_valid
+#print axioms Staircase.Certificate.rows
 #print axioms Staircase.adj_iff_grid
